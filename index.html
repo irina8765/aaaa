@@ -20,11 +20,29 @@
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  var map = L.map('map').setView([24.149944, 120.684083], 17);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap 貢獻者'
-  }).addTo(map);
+var map = L.map('map', {
+  center: [24.150609684831462, 120.684072266604],
+  zoom: 16,
+  maxZoom: 17,
+  minZoom: 15,
+  maxBounds: [
+    [24.14264686441019, 120.66510878351437],
+    [24.159543123789856, 120.70513715968198]
+  ],
+  maxBoundsViscosity: 0,
+  dragging: true,
+  scrollWheelZoom: true
+});
 
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap 貢獻者'
+}).addTo(map);
+
+// 添加比例尺
+L.control.scale({
+    metric: true,
+    imperial: false
+}).addTo(map);
   var cafes = [
     {
       name: "Single Place Coffee Lab",
@@ -157,7 +175,69 @@
   img: "https://lh3.googleusercontent.com/p/AF1QipPJjh3zsOWWDOl5-TztOAbO2jJQPb6ttZqG3ijK=w408-h272-k-no",
   address: "404台中市北區三民路三段66號",
   link: "https://www.google.com/maps/place/82mm+Cafe+(%E5%92%96%E5%95%A1%E9%A4%A8)/@24.1477994,120.6814411,18z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d694a41bcc5:0x847b83ee65353c21!8m2!3d24.1477994!4d120.683501!16s%2Fg%2F11c2k01zcm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
-}
+},
+{
+      name: "CUP&GO來速咖啡公園路站",
+      lat: 24.147482952829115,
+      lng: 120.68271596786457,
+      rating: "4.9",
+      open: "全天24小時",
+      img: "https://lh3.googleusercontent.com/p/AF1QipPyRv8v_Mh0J2mG9P91eOOmx6gSHRdVW3eJuaBi=w408-h305-k-no",
+      address: "404台中市北區三民路三段50號",
+      link: "https://www.google.com/maps/place/CUP%26GO%E4%BE%86%E9%80%9F%E5%92%96%E5%95%A1%E5%85%AC%E5%9C%92%E8%B7%AF%E7%AB%99/@24.1465196,120.6830628,16z/data=!4m11!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m6!1s0x34693df6b46b0e9d:0x302aa271ff6cb92e!8m2!3d24.1465196!4d120.6830628!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBC2NvZmZlZV9zaG9w4AEA!16s%2Fg%2F11hf6n7fxy?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      name: "Louisa Coffee 路易莎咖啡(台中科大門市)",
+      lat: 24.152590502818605,
+      lng: 120.68220696941624,
+      price: "1~200元/人",
+      rating: "3.5",
+      open: "星期一、07:00–22:00\n星期二、07:00–22:00\n星期三、07:00–22:00\n星期四、07:00–22:00\n星期五、07:00–22:00\n星期六、07:00–22:00\n星期日、07:00–22:00",
+      img: "https://lh3.googleusercontent.com/p/AF1QipO6LyoA-u0LrGCheyTP_SfMbYV_ceCp3dgCnQo9=w408-h306-k-no",
+      address: "404台中市北區中華路二段120之3號",
+      link: "https://www.google.com/maps/place/Louisa+Coffee+%E8%B7%AF%E6%98%93%E8%8E%8E%E5%92%96%E5%95%A1(%E5%8F%B0%E4%B8%AD%E7%A7%91%E5%A4%A7%E9%96%80%E5%B8%82)/@24.1505357,120.6816966,16.75z/data=!4m10!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m5!1s0x34693d35f4fc341f:0x4aca58f35bd4c010!8m2!3d24.1523448!4d120.6823026!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBDGNvZmZlZV9zdG9yZeABAA?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      name: "禾榖咖啡hegucafe",
+      lat: 24.149324686002412,
+      lng: 120.68130669748791,
+      price: "1~200元/人",
+      rating: "5",
+      open: "星期一、11:00–20:00\n星期二、11:00–20:00\n星期三、11:00–20:00\n星期四、11:00–20:00\n星期五、11:00–20:00\n星期六、11:00–20:00\n星期日、11:00–20:00",
+      img: "https://lh3.googleusercontent.com/p/AF1QipMYhI0WnUOZnP-rY_ICtKph6f6Y795FbkBDwpMY=w408-h612-k-no",
+      address: "404台中市北區太平路153-1號",
+      link: "https://www.google.com/maps/place/%E7%A6%BE%E6%A6%96%E5%92%96%E5%95%A1hegucafe%EF%BC%88%E5%85%AC%E4%BC%91IG%E5%85%AC%E5%91%8A%EF%BC%89/@24.1489429,120.6760281,16z/data=!4m11!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m6!1s0x34693d003549fbff:0xe38bddef91acf108!8m2!3d24.1489433!4d120.681234!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBDGNvZmZlZV9zdG9yZeABAA!16s%2Fg%2F11w93y9vkk?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      name: "Holo+Cafe",
+      lat: 24.152633620230098,
+      lng: 120.68471846722107,
+      rating: "4.8",
+      open: "星期一、11:00–21:30\n星期二、11:00–21:30\n星期三、11:00–21:30\n星期四、11:00–21:30\n星期五、11:00–21:30\n星期六、10:30–21:30\n星期日、10:30–21:30",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOHkjMol2diRP3O5zNUmbCYTFgLfmRRJMHNAzYy=w408-h305-k-no",
+      address: "404台中市北區三民路三段161號4樓",
+      link: "https://www.google.com/maps/place/Holo%2BCafe/@24.1489429,120.6760281,16z/data=!3m1!5s0x34693d6672b40a07:0xa8b6552fd20106e6!4m11!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m6!1s0x34693dd46a23d463:0xd3d139bc9309806!8m2!3d24.1521583!4d120.6847799!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBDGNvZmZlZV9zdG9yZeABAA!16s%2Fg%2F11mw7ny0fp?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      name: "HWC黑沃咖啡-台中學士店",
+      lat: 24.154594588438542,
+      lng: 120.68188816291811,
+      rating: "4.4",
+      open: "星期一、08:00–16:30\n星期二、08:00–16:30\n星期三、08:00–16:30\n星期四、08:00–16:30\n星期五、08:00–16:30\n星期六、08:00–16:30\n星期日、08:00–16:30",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOHkjMol2diRP3O5zNUmbCYTFgLfmRRJMHNAzYy=w408-h305-k-no",
+      address: "40458台中市北區學士路63號",
+      link: "https://www.google.com/maps/place/HWC%E9%BB%91%E6%B2%83%E5%92%96%E5%95%A1-%E5%8F%B0%E4%B8%AD%E5%AD%B8%E5%A3%AB%E5%BA%97/@24.154345,120.6775108,17z/data=!4m11!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m6!1s0x34693d65c8f3d891:0x1e1cfce542df2a4a!8m2!3d24.154345!4d120.681888!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBBGNhZmXgAQA!16s%2Fg%2F11dfdmrxk5?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    },
+    {
+      name: "星巴克中友門市",
+      lat: 24.15212098624331,
+      lng: 120.68462204636648,
+      rating: "3.6",
+      open: "星期一、09:00–21:30\n星期二、09:00–21:30\n星期三、09:00–21:30\n星期四、09:00–21:30\n星期五、09:00–22:00\n星期六、09:00–22:00\n星期日、09:00–21:30",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOD3HGbt9gz5CZklwxNKVpREgzaU6bViufTgFw=w408-h306-k-no",
+      address: "40446台中市北區三民路三段161號1樓C棟",
+      link: "https://www.google.com/maps/place/%E6%98%9F%E5%B7%B4%E5%85%8B%E4%B8%AD%E5%8F%8B%E9%96%80%E5%B8%82/@24.150785,120.6818909,16.5z/data=!3m1!5s0x34693d6689d7a353:0x4d066473c108d240!4m11!1m3!2m2!1z5ZKW5ZWh5buz!6e5!3m6!1s0x34693d6623ef11b1:0xb1f878754a61fc6f!8m2!3d24.1518081!4d120.6847387!15sCgnlkpbllaHlu7NaDCIK5ZKW5ZWhIOW7s5IBDGNvZmZlZV9zdG9yZeABAA!16s%2Fg%2F124yg2z4c?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+    }
   ];
 
   cafes.forEach(cafe => {
