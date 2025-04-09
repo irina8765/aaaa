@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>台中一中街咖啡地圖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #map { height: 100vh; }
+    .popup img { width: 100px; height: 80px; object-fit: cover; }
+    .popup { text-align: center; }
+    .popup h3 { margin: 5px 0; }
+  </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  var map = L.map('map').setView([24.149944, 120.684083], 17);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap 貢獻者'
+  }).addTo(map);
+
+  var cafes = [
+    {
+      name: "Single Place Coffee Lab",
+      lat: 24.15151023573582,
+      lng: 120.68567739241294,
+      price: "1~200元/人",
+      rating: "4.7",
+      open: "星期一 12:30–21:00\n星期二 12:30–21:00\n星期三 12:30–19:00\n星期四 12:30–19:00\n星期五 12:30–19:00\n星期六 12:00–21:00\n星期日 12:00–21:00",
+      img: "https://lh5.googleusercontent.com/p/AF1QipNoiXq3Msw2FDIsMTEFbs4qQTnBL8-ZuxpzwID3=w408-h408-k-no",
+      address: "404台中市北區一中街167巷3號",
+      link: "https://www.google.com/maps/place/single+place+coffee+lab/data=!4m7!3m6!1s0x34693d6881fbb605:0xb2537b721e1e6b1f!8m2!3d24.1514913!4d120.6856795!16s%2Fg%2F11g8k5fn65!19sChIJBbb7gWg9aTQRH2seHnJ7U7I?authuser=0&hl=zh-TW&rclk=1"
+    },
+    {
+      name: "尤芙·咖啡茶坊 EUDOVE CAFE",
+      lat: 24.153023909183112,
+      lng: 120.68532133294649,
+      price: "1~200元/人",
+      rating: "4.5",
+      open: "星期一 07:30–20:00\n星期二 07:30–20:00\n星期三 07:30–20:00\n星期四 07:30–20:00\n星期五 07:30–20:00\n星期六 08:00–21:00\n星期日 08:00–20:00",
+      img: "https://lh3.googleusercontent.com/p/AF1QipPSM-4VBqvTnm0WQRBbBJ-7wLYww8-jgFohO74q=w408-h612-k-no",
+      address: "404台中市北區三民路三段193-5號",
+      link: "https://www.google.com/maps/place/%E5%B0%A4%E8%8A%99%C2%B7%E5%92%96%E5%95%A1%E8%8C%B6%E5%9D%8A+EUDOVE+CAFE/@24.1524607,120.685114,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x346e052f8f5911c7:0xc570446524e150a!8m2!3d24.1529755!4d120.685304!16s%2Fg%2F11jrjbntjq"
+    },
+    {
+      name: "Mini izzy cafe 台中店",
+      lat: 24.153167842693346,
+      lng: 120.68335803554871,
+      price: "1~200元/人",
+      rating: "4.7",
+      open: "星期一 10:00–19:00\n星期二 10:00–19:00\n星期三 10:00–19:00\n星期四 10:00–19:00\n星期五 10:00–19:00\n星期六 10:00–17:30\n星期日 10:00–17:30",
+      img: "https://lh3.googleusercontent.com/p/AF1QipNOsSTbvz28RYY0MLBi_q50ZpFJAQKJb0B8Z2hd=w408-h306-k-no",
+      address: "404台中市北區錦平北街29號",
+      link: "https://www.google.com/maps/place/Mini+izzy+cafe+%E5%8F%B0%E4%B8%AD%E5%BA%97/@24.153114,120.6823334,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d72d418ff95:0xbb904c625aa3884f!8m2!3d24.153114!4d120.6833634!16s%2Fg%2F11cn3rcnxw"
+    },
+    {
+      name: "BùHē 布喝咖啡 I 手作甜點",
+      lat: 24.147395825176712,
+      lng: 120.68439194659334,
+      price: "200~400元/人",
+      rating: "5.0",
+      open: "暫停營業",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOSI1Ii70I8ss6LbdquyAjY6rzMSoBaNPNa6RmP=w408-h725-k-no",
+      address: "404台中市北區太平路19巷3弄32號2樓",
+      link: "https://www.google.com/maps/place/B%C3%B9H%C4%93+%E5%B8%83%E5%96%9D%E5%92%96%E5%95%A1+I+%E6%89%8B%E4%BD%9C%E7%94%9C%E9%BB%9E/@24.1473224,120.6833539,19z"
+    },
+    {
+  name: "無咖啡 More Cafe",
+  lat: 24.147693649999056,
+  lng: 120.68630884229516,
+  price: "200~400元/人",
+  rating: "4.9",
+  open: "星期一 11:30–19:00\n星期二、休息\n星期三 11:30–19:00\n星期四 11:30–19:00\n星期五 11:30–19:00\n星期六 11:30–19:00\n星期日 11:30–19:00",
+  img: "https://lh3.googleusercontent.com/p/AF1QipNk-ALUcx4vU7oT901uISeWd92GbbY9Kj39GQvx=w408-h544-k-no",
+  address: "404台中市北區太平路4-3號",
+  link: "https://www.google.com/maps/place/%E7%84%A1%E5%92%96%E5%95%A1+More+Cafe%EF%BC%88%E4%B8%80%E4%B8%AD%E7%83%A4%E7%8B%80%E7%8C%BF%E8%88%87%E3%81%99%E3%81%8D%E5%AE%B6%E4%B8%AD%E9%96%93%E7%84%A1%E5%B0%BE%E5%B7%B7%E5%85%A7%EF%BC%89/@24.1476447,120.6853003,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d32a9e782fd:0x661ce73d828a065b!8m2!3d24.1476447!4d120.6863303!16s%2Fg%2F11vc00hl79?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+},
+{
+  name: "Modism Café 摩德年代 臺中店",
+  lat: 24.14760284503825,
+  lng: 120.68117178647368,
+  price: "200~400元/人",
+  rating: "4.6",
+  open: "星期一 14:00–19:30\n星期二 14:00–19:30\n星期三 休息\n星期四 14:00–19:30\n星期五 14:00–19:30\n星期六 14:00–19:30\n星期日 14:00–19:30",
+  img: "https://lh3.googleusercontent.com/p/AF1QipNvi5daFrTWdJ8Rgm6RzI3mCiR9_GddNPZsqVVu=w408-h296-k-no",
+  address: "404台中市北區大誠街138號",
+  link: "https://www.google.com/maps/place/Modism+Caf%C3%A9+%E6%91%A9%E5%BE%B7%E5%B9%B4%E4%BB%A3+%E8%87%BA%E4%B8%AD%E5%BA%97/@24.147549,120.6801096,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d6e9b00e29f:0xb08694f11fd2c02a!8m2!3d24.147549!4d120.6811396!16s%2Fg%2F11b6mmmdlm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+},
+{
+  name: "CAFE!N 硬咖啡 台中中友三民門市",
+  lat: 24.15296942138567,
+  lng: 120.68559029322012,
+  price: "1~200元/人",
+  rating: "4.5",
+  open: "星期一 10:00–19:00\n星期二 10:00–19:00\n星期三 10:00–19:00\n星期四 10:00–19:00\n星期五 10:00–19:00\n星期六 10:00–17:30\n星期日 10:00–17:30",
+  img: "https://lh3.googleusercontent.com/p/AF1QipNwCJkE2miYCYeNRWqFH5DiQZVyKsB8JnW_KEnw=w408-h306-k-no",
+  address: "404台中市北區三民路三段194-1號",
+  link: "https://www.google.com/maps/place/CAFE!N+%E7%A1%AC%E5%92%96%E5%95%A1+%E5%8F%B0%E4%B8%AD%E4%B8%AD%E5%8F%8B%E4%B8%89%E6%B0%91%E9%96%80%E5%B8%82/@24.1529425,120.6845442,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d50e3a2b9b7:0x8b71f02edb7670b7!8m2!3d24.1529745!4d120.6855903!16s%2Fg%2F11bxjbcxhz"
+},
+{
+    name: "Deer Caf'e 迷鹿咖啡",
+    lat: 24.15165283818124,
+    lng: 120.68792278647369,
+    price: "200~400元/人",
+    rating: "4.3",
+    open: "星期一、09:30–17:00\n星期二、09:30–17:00\n星期三、09:30–17:00\n星期四、09:30–17:00\n星期五、09:30–17:00\n星期六、09:30–17:00\n星期日、休息",
+    img: "https://lh3.googleusercontent.com/p/AF1QipMPEkXAzKIw4w1yWOmJyWjfl_y8SqsoMzifdQzO=w425-h240-k-no",
+    address: "404台中市北區雙十路二段一巷二號 1樓",
+    link: "https://www.google.com/maps/place/Deer+Caf'e+%E8%BF%B7%E9%B9%BF%E5%92%96%E5%95%A1/@24.1515941,120.6868606,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d75cf49e6a3:0xb949efe9ef5d839e!8m2!3d24.1515941!4d120.6878906!16s%2Fg%2F11bzt5wc41?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+  },
+  {
+    name: "Louisa Coffee 路易莎咖啡(一中門市)",
+    lat: 24.148821659652096,
+    lng: 120.6868919864737,
+    price: "$1~200",
+    rating: "3.5",
+    open: "星期一、07:00–17:00\n星期二、07:00–17:00\n星期三、07:00–17:00\n星期四、07:00–17:00\n星期五、07:00–17:00\n星期六、07:00–17:00\n星期日、07:00–17:00",
+    img: "https://lh3.googleusercontent.com/p/AF1QipMsEZBoNdcljN1N4vD0lT4l7SLGnwHWQmZMUAhP=w408-h544-k-no",
+    address: "404台中市北區雙十路一段125號",
+    link: "https://www.google.com/maps/place/Louisa+Coffee+%E8%B7%AF%E6%98%93%E8%8E%8E%E5%92%96%E5%95%A1(%E4%B8%80%E4%B8%AD%E9%96%80%E5%B8%82)/@24.1487825,120.6858298,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d0597d5aaa9:0x69a6760c8afbf00b!8m2!3d24.1487825!4d120.6868598!16s%2Fg%2F11fhr7nm_4?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+  },
+  {
+    name: "心跳女僕咖啡",
+    lat: 24.14985217630588,
+    lng: 120.68513846008621,
+    price: "200~400元/人",
+    rating: "4.8",
+    open: "暫停營業",
+    img: "https://lh3.googleusercontent.com/p/AF1QipMqiPjrGQYusolsRtMDW__LdQccNXScG7jOhN2z=w408-h544-k-no",
+    address: "404台中市北區育才街6巷2號號 2樓",
+    link: "https://www.google.com/maps/place/%E5%BF%83%E8%B7%B3%E5%A5%B3%E5%83%95%E5%92%96%E5%95%A1/@24.1497812,120.6841326,19z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693de767bc2717:0xde0f8334b9941b52!8m2!3d24.1497812!4d120.6851626!16s%2Fg%2F11j1c_gs2b?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+  },
+  {
+  name: "艾得咖啡一中店",
+  lat: 24.148097714746456,
+  lng: 120.68393807113087,
+  price: "1~200元/人",
+  rating: "4.3",
+  open: "星期一、10:00–22:10\n星期二、10:00–22:10\n星期三、10:00–22:10\n星期四、10:00–22:10\n星期五、10:00–22:40\n星期六、10:00–22:40\n星期日、10:00–22:10",
+  img: "https://lh3.googleusercontent.com/p/AF1QipMQ5AjUg31u1F8C4PWi2xnNIAIDG47bUsPr1Je-=w408-h306-k-no",
+  address: "404台中市北區太平路81之1號",
+  link: "https://www.google.com/maps/place/%E8%89%BE%E5%BE%97%E5%92%96%E5%95%A1%E4%B8%80%E4%B8%AD%E5%BA%97/@24.1479997,120.682694,18.75z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d693719e1a3:0xa233e7d4675128d6!8m2!3d24.1480145!4d120.6839488!16s%2Fg%2F1th5g5vm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+},
+{
+  name: "82mm Cafe (咖啡館)",
+  lat: 24.147916879824006,
+  lng: 120.68339371157606,
+  price: "200~400元/人",
+  rating: "4.7",
+  open: "星期一、12:00–19:00\n星期二、12:00–19:00\n星期三、12:00–19:00\n星期四、12:00–19:00\n星期五、12:00–19:00\n星期六、12:00–19:00\n星期日、12:00–19:00",
+  img: "https://lh3.googleusercontent.com/p/AF1QipPJjh3zsOWWDOl5-TztOAbO2jJQPb6ttZqG3ijK=w408-h272-k-no",
+  address: "404台中市北區三民路三段66號",
+  link: "https://www.google.com/maps/place/82mm+Cafe+(%E5%92%96%E5%95%A1%E9%A4%A8)/@24.1477994,120.6814411,18z/data=!4m10!1m3!11m2!2s7ByXGhfkBwkYokcpnJEBJH9IeBBK9Q!3e3!3m5!1s0x34693d694a41bcc5:0x847b83ee65353c21!8m2!3d24.1477994!4d120.683501!16s%2Fg%2F11c2k01zcm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoASAFQAw%3D%3D"
+}
+  ];
+
+  cafes.forEach(cafe => {
+    var marker = L.marker([cafe.lat, cafe.lng]).addTo(map);
+    marker.bindPopup(`
+      <div class="popup">
+        <img src="${cafe.img}" alt="${cafe.name}圖片" />
+        <h3>${cafe.name}</h3>
+        <p>平均花費：${cafe.price}</p>
+        <p>評價：${cafe.rating}顆星</p>
+        <p>營業時間：${cafe.open}</p>
+        <p>地址：${cafe.address}</p>
+        <p><a href="${cafe.link}" target="_blank">查看地圖</a></p>
+      </div>
+    `);
+    marker.on('click', function() {
+      map.setView([cafe.lat + 0.0007, cafe.lng], 18);
+    });
+  });
+
+  map.on('click', function(e) {
+    map.setView([24.149944, 120.684083], 17);
+  });
+</script>
+
+</body>
+</html>
