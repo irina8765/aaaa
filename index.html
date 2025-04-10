@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -17,7 +18,38 @@
 <body>
 
 <div id="map"></div>
-
+<!-- 方位標 -->
+<div id="compass">
+    <div class="compass-label n">北</div>
+    <div class="compass-label e">東</div>
+    <div class="compass-label s">南</div>
+    <div class="compass-label w">西</div>
+  </div>
+  
+  <style>
+    #compass {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      border: 2px solid #333;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 1000;
+    }
+    .compass-label {
+      position: absolute;
+      font-size: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+    .compass-label.n { top: 2px; left: 50%; transform: translateX(-50%); }
+    .compass-label.e { right: 2px; top: 50%; transform: translateY(-50%); }
+    .compass-label.s { bottom: 2px; left: 50%; transform: translateX(-50%); }
+    .compass-label.w { left: 2px; top: 50%; transform: translateY(-50%); }
+  </style>
+  
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
 var map = L.map('map', {
